@@ -8,7 +8,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Variáveis globais para controle
 let cropper = null;
-let croppedBlob = null;
+let croppedBlob = null
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Sistema de Cadastro Iniciado");
@@ -202,7 +202,7 @@ function setupCepSearch() {
 
 function setupRequiredFieldAsterisks() {
     const requiredFields = document.querySelectorAll('[required]');
-    
+
     requiredFields.forEach(field => {
         const id = field.id;
         let label;
@@ -404,7 +404,7 @@ function setupFormSubmission() {
 
         // 1. Pega o primeiro campo de texto/select inválido
         const invalidField = form.querySelector(':invalid');
-        
+
         // 2. Verifica se a foto está faltando
         const isPhotoMissing = !croppedBlob;
         const photoSection = document.getElementById('photo-upload-section');
@@ -456,8 +456,8 @@ function setupFormSubmission() {
                     preview.style.borderColor = 'red';
                     preview.style.boxShadow = '0 0 10px rgba(255,0,0,0.3)';
                     alert("A foto é obrigatória! Por favor, adicione uma foto.");
-                    setTimeout(() => { 
-                        preview.style.borderColor = '#e5e7eb'; 
+                    setTimeout(() => {
+                        preview.style.borderColor = '#e5e7eb';
                         preview.style.boxShadow = 'none';
                     }, 3000);
                 } else {
@@ -467,7 +467,7 @@ function setupFormSubmission() {
                     // Efeito de tremer
                     elementToFocus.parentElement.style.animation = 'shake 0.5s';
                     setTimeout(() => elementToFocus.parentElement.style.animation = '', 500);
-                    
+
                     // Pega o nome do campo para o alerta
                     const label = elementToFocus.previousElementSibling ? elementToFocus.previousElementSibling.textContent : "campo obrigatório";
                     alert(`Por favor, preencha o campo: ${label.replace('*', '').trim()}`);
@@ -478,7 +478,7 @@ function setupFormSubmission() {
         }
 
         // --- 5. ENVIO DOS DADOS (Se não houver erros) ---
-        
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
 
@@ -495,10 +495,10 @@ function setupFormSubmission() {
 
             // ... (O RESTO DO CÓDIGO DE MONTAGEM DO OBJETO CONTINUA EXATAMENTE IGUAL) ...
             // Mantenha a parte do const getCheckedValues, dependentesArray e const dados...
-            
+
             // -- COLE AQUI O RESTANTE DO CÓDIGO DA RESPOSTA ANTERIOR --
             // (Vou repetir a parte final apenas para garantir que você saiba onde encaixar)
-            
+
             const getCheckedValues = (name) => {
                 return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
                     .map(cb => cb.value).join(', ');
@@ -510,7 +510,7 @@ function setupFormSubmission() {
                 const nascDep = row.querySelector('.dep-nasc').value;
                 if (nomeDep) dependentesArray.push({ nome: nomeDep, data_nascimento: nascDep });
             });
-            
+
             const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : null; };
 
             const dados = {
@@ -555,7 +555,7 @@ function setupFormSubmission() {
                 data_batismo_espirito_santo: getVal('batismoEspirito') || null,
                 igreja: getVal('igrejaAtual'),
                 igreja_anterior: getVal('igrejaAnterior'),
-                ja_cursou_o_rhema: getVal('rhema'), 
+                ja_cursou_o_rhema: getVal('rhema'),
                 q_servir_departamento: getVal('serveDepartamento'),
                 r_departamento: getCheckedValues('ministerio_atual'),
                 q_departamento: getVal('interesseServir'),
@@ -673,107 +673,9 @@ function setupAutoScroll() {
     });
 }
 
-// ============================================================
-// MODO DE DESENVOLVIMENTO - PREENCHIMENTO AUTOMÁTICO (ATUALIZADO)
-// ============================================================
-
-// Cria o botão flutuante visualmente
-const btnDev = document.createElement('button');
-btnDev.innerText = '⚡ Preencher Tudo';
-btnDev.style.position = 'fixed';
-btnDev.style.bottom = '20px';
-btnDev.style.left = '20px';
-btnDev.style.zIndex = '9999';
-btnDev.style.padding = '15px 20px';
-btnDev.style.backgroundColor = '#8b5cf6'; // Roxo
-btnDev.style.color = 'white';
-btnDev.style.border = 'none';
-btnDev.style.borderRadius = '50px';
-btnDev.style.fontWeight = 'bold';
-btnDev.style.cursor = 'pointer';
-btnDev.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-
-// Adiciona o botão na tela
-document.body.appendChild(btnDev);
-
-// Função que preenche os dados
-btnDev.addEventListener('click', () => {
-    // 1. Dados Pessoais e Documentos (Etapa 1)
-    document.getElementById('fullName').value = "Usuário de Teste Completo";
-    document.getElementById('email').value = "teste.completo@exemplo.com";
-    document.getElementById('cpf').value = "123.456.789-00";
-    document.getElementById('rg').value = "1.234.567";
-
-    // --- CAMPOS QUE FALTAVAM ---
-    document.getElementById('orgaoExpeditor').value = "SDS/PE";
-    document.getElementById('nacionalidade').value = "Brasileira";
-    document.getElementById('naturalidade').value = "Recife/PE";
-    // ---------------------------
-
-    // 2. Endereço (Etapa 2)
-    document.getElementById('cep').value = "53610-000";
-    document.getElementById('rua').value = "Rua de Teste Desenvolvimento";
-    document.getElementById('bairro').value = "Centro";
-    document.getElementById('cidade').value = "Igarassu";
-    document.getElementById('estado').value = "PE";
-    document.getElementById('numero').value = "100";
-
-    // 3. Contato (Etapa 2)
-    document.getElementById('telefone1').value = "(81) 99999-8888";
-    document.getElementById('telefone2').value = "(81) 98888-7777";
-
-    // --- CAMPO QUE FALTAVA ---
-    document.getElementById('operadora1').value = "Vivo";
-    document.getElementById('operadora2').value = "Claro";
-    // -------------------------
-
-    // 4. Profissão (Etapa 3)
-    document.getElementById('profissao').value = "Desenvolvedor de Software";
-
-    // 5. Datas (Preenche todas as datas)
-    document.querySelectorAll('input[type="date"]').forEach(input => {
-        input.value = "2000-01-01";
-    });
-
-    // 6. Selects (Ativa condicionais)
-    document.querySelectorAll('select').forEach(select => {
-        if (select.options.length > 1) {
-            // Seleciona a última opção (geralmente "Sim" ou "Casado")
-            select.selectedIndex = select.options.length - 1;
-            // Dispara o evento para abrir os campos ocultos
-            select.dispatchEvent(new Event('change'));
-        }
-    });
-
-    // 7. Textareas
-    document.querySelectorAll('textarea').forEach(textarea => {
-        textarea.value = "Observação de teste preenchida automaticamente.";
-    });
-
-    // 8. Campos Condicionais Específicos
-    // Como os selects ativaram "Casado" e "Empresário", precisamos preencher os campos que apareceram
-
-    // Cônjuge
-    const inputConjuge = document.getElementById('nomeConjuge');
-    if (inputConjuge) inputConjuge.value = "Cônjuge de Teste";
-
-    // Empresa (Esse estava dando erro no seu print)
-    const inputEmpresa = document.getElementById('nomeEmpresa');
-    if (inputEmpresa) inputEmpresa.value = "Minha Empresa de Teste LTDA";
-
-    // Igreja Anterior
-    const inputIgrejaAnt = document.getElementById('igrejaAnterior');
-    if (inputIgrejaAnt) inputIgrejaAnt.value = "Igreja Teste";
-
-    const inputAnoSaida = document.getElementById('dataSaidaIgreja');
-    if (inputAnoSaida) inputAnoSaida.value = "2020";
-
-    alert("✅ Todos os campos (incluindo os ocultos) foram preenchidos!");
-});
-
 function setupRealTimeValidation() {
     const form = document.getElementById('signupForm');
-    
+
     // 1. Para campos de Texto, Selects e Textareas
     const inputs = form.querySelectorAll('input, select, textarea');
 
@@ -782,7 +684,7 @@ function setupRealTimeValidation() {
         const clearError = () => {
             // Restaura a cor da borda para o cinza padrão (#e5e7eb é a cor da sua variável CSS)
             input.style.borderColor = '#e5e7eb';
-            
+
             // Remove animação de tremor se houver
             if (input.parentElement) {
                 input.parentElement.style.animation = '';
@@ -791,7 +693,7 @@ function setupRealTimeValidation() {
 
         // Ocorre quando o usuário digita
         input.addEventListener('input', clearError);
-        
+
         // Ocorre quando o usuário seleciona uma opção (Select) ou sai do campo
         input.addEventListener('change', clearError);
     });
@@ -812,7 +714,7 @@ function setupRealTimeValidation() {
     if (photoInput) {
         photoInput.addEventListener('change', clearPhotoError);
     }
-    
+
     if (confirmCropBtn) {
         confirmCropBtn.addEventListener('click', clearPhotoError);
     }
