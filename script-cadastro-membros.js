@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lógica condicional simples
     setupConditionals();
     setupRealTimeValidation();
+    setupClearButtons();
 });
 
 // --- FUNÇÕES DE UI E MÁSCARAS ---
@@ -718,4 +719,47 @@ function setupRealTimeValidation() {
     if (confirmCropBtn) {
         confirmCropBtn.addEventListener('click', clearPhotoError);
     }
+}
+
+function setupClearButtons() {
+    // Seleciona apenas inputs de texto, email, tel, etc.
+    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"]');
+
+    inputs.forEach(input => {
+        // 1. Cria o botão X
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button'; // Importante para não submeter o form
+        clearBtn.className = 'clear-input-btn';
+        clearBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'; // Usa o ícone do FontAwesome
+        clearBtn.tabIndex = -1; // Pula o botão na navegação via Tab
+
+        // 2. Adiciona o botão logo após o input no HTML
+        input.insertAdjacentElement('afterend', clearBtn);
+        
+        // 3. Adiciona classe ao input para dar espaço ao texto
+        input.classList.add('input-with-clear');
+
+        // 4. Função para mostrar/esconder o botão
+        const toggleBtn = () => {
+            clearBtn.style.display = input.value.length > 0 ? 'block' : 'none';
+        };
+
+        // 5. Listeners
+        // Ao digitar, verifica se mostra o botão
+        input.addEventListener('input', toggleBtn);
+        
+        // Ao clicar no botão X
+        clearBtn.addEventListener('click', () => {
+            input.value = ''; // Limpa o valor
+            toggleBtn(); // Esconde o botão
+            input.focus(); // Devolve o foco para o usuário continuar digitando
+            
+            // Dispara eventos para garantir que validações e máscaras saibam que mudou
+            input.dispatchEvent(new Event('input'));
+            input.dispatchEvent(new Event('change'));
+        });
+
+        // Verifica o estado inicial (caso o navegador preencha automático)
+        toggleBtn();
+    });
 }
