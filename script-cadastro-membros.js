@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     setupConditionals();
     setupRealTimeValidation();
     setupClearButtons();
+    setupDateColors();
+    setupMagicButton();
 });
 
 // --- FUNÇÕES DE UI E MÁSCARAS ---
@@ -273,7 +275,7 @@ function setupConditionals() {
     empresario.addEventListener('change', () => {
         if (empresario.value === 'Sim') {
             nomeEmpresaGroup.style.display = 'block';
-            nomeEmpresaInput.required = true;
+            nomeEmpresaInput.required = false;
         } else {
             nomeEmpresaGroup.style.display = 'none';
             nomeEmpresaInput.required = false;
@@ -401,7 +403,7 @@ function setupFormSubmission() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // --- VALIDAÇÃO INTELIGENTE DE PRECEDÊNCIA ---
+        // --- VALIDAÇÃO INTELIGENTE DE PRECEDÊNCIA (CORRIGIDA) ---
 
         // 1. Pega o primeiro campo de texto/select inválido
         const invalidField = form.querySelector(':invalid');
@@ -415,21 +417,30 @@ function setupFormSubmission() {
 
         // 3. Lógica de Decisão: Quem vem primeiro?
         if (invalidField && isPhotoMissing) {
-            // Ambos estão com erro. Vamos ver quem aparece primeiro no HTML.
-            // O método compareDocumentPosition retorna uma máscara de bits.
-            // DOCUMENT_POSITION_FOLLOWING (4) significa que o segundo nó (photoSection) vem DEPOIS do primeiro.
+            // Verifica a posição no documento
             if (invalidField.compareDocumentPosition(photoSection) & Node.DOCUMENT_POSITION_FOLLOWING) {
-                // O campo de texto está ANTES da foto
-                elementToFocus = invalidField;
-                errorType = 'field';
+                // Se o invalidField for o próprio input de arquivo (que está hidden), trata como erro de foto
+                if (invalidField.id === 'photo-input') {
+                    elementToFocus = photoSection;
+                    errorType = 'photo';
+                } else {
+                    elementToFocus = invalidField;
+                    errorType = 'field';
+                }
             } else {
-                // O campo de texto está DEPOIS da foto (ex: Email vem depois da foto)
                 elementToFocus = photoSection;
                 errorType = 'photo';
             }
         } else if (invalidField) {
-            elementToFocus = invalidField;
-            errorType = 'field';
+            // --- CORREÇÃO AQUI ---
+            // Se o campo inválido for o input da foto, muda o tipo de erro para 'photo'
+            if (invalidField.id === 'photo-input') {
+                elementToFocus = photoSection;
+                errorType = 'photo';
+            } else {
+                elementToFocus = invalidField;
+                errorType = 'field';
+            }
         } else if (isPhotoMissing) {
             elementToFocus = photoSection;
             errorType = 'photo';
@@ -490,7 +501,7 @@ function setupFormSubmission() {
 
             // Upload da Foto
             if (croppedBlob) {
-                submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Enviando foto...';
+               
                 fotoUrl = await uploadProfilePhoto(croppedBlob, nome, cpf);
             }
 
@@ -574,12 +585,34 @@ function setupFormSubmission() {
 
             if (error) throw error;
 
-            alert('Cadastro realizado com sucesso! Bem-vindo(a)!');
-            window.location.reload();
+            // --- AÇÃO DE SUCESSO ATUALIZADA ---
+
+            // 1. Limpa o formulário (dados do input)
+            form.reset();
+
+            // 2. Limpa o estado da foto (variável global e visual)
+            const photoPreview = document.getElementById('photo-preview');
+            if (photoPreview) {
+                photoPreview.style.backgroundImage = 'none';
+                photoPreview.innerHTML = '<i class="fa-solid fa-camera"></i>';
+            }
+            croppedBlob = null;
+
+            // MUDANÇA 3: RESTAURA O BOTÃO IMEDIATAMENTE
+            // Isso garante que, mesmo atrás do modal, o botão já esteja pronto de novo.
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Cadastro';
+
+            // 3. Exibe o novo modal personalizado
+            showSuccessModal();
+
+            // --- FIM DA AÇÃO DE SUCESSO ---
 
         } catch (error) {
             console.error('Erro detalhado:', error);
             alert('Erro ao salvar: ' + error.message);
+            
+            // Restaura o botão em caso de erro também
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Cadastro';
         }
@@ -674,6 +707,46 @@ function setupAutoScroll() {
     });
 }
 
+// --- FUNÇÕES DE CONTROLE DO MODAL DE SUCESSO ---
+
+function showSuccessModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.classList.add('active');
+        // Toca uma vibração suave no celular se suportado (opcional)
+        if (navigator.vibrate) navigator.vibrate(200);
+    }
+}
+
+function hideAndReset() {
+    const modal = document.getElementById('successModal');
+    if (modal) modal.classList.remove('active');
+
+    // Recarrega a página para limpar todos os campos e o stepper
+    window.location.reload();
+}
+
+// Configura os botões do modal
+document.addEventListener('DOMContentLoaded', function () {
+    const modalNewBtn = document.getElementById('modalNewBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const successModal = document.getElementById('successModal');
+
+    // Botão "Novo Cadastro": Recarrega a página para limpar tudo completamente
+    if (modalNewBtn) {
+        modalNewBtn.addEventListener('click', () => {
+            window.location.reload();
+        });
+    }
+
+    // Botão "Fechar": Apenas esconde o modal
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', () => {
+            if (successModal) successModal.classList.remove('active');
+        });
+    }
+});
+
 function setupRealTimeValidation() {
     const form = document.getElementById('signupForm');
 
@@ -722,44 +795,157 @@ function setupRealTimeValidation() {
 }
 
 function setupClearButtons() {
-    // Seleciona apenas inputs de texto, email, tel, etc.
-    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"]');
+    // SELETOR ATUALIZADO: Agora inclui TEXTAREA e URL
+    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea');
 
     inputs.forEach(input => {
+        // Verifica se já tem botão para não duplicar
+        if (input.nextElementSibling && input.nextElementSibling.classList.contains('clear-input-btn')) {
+            return;
+        }
+
         // 1. Cria o botão X
         const clearBtn = document.createElement('button');
-        clearBtn.type = 'button'; // Importante para não submeter o form
+        clearBtn.type = 'button';
         clearBtn.className = 'clear-input-btn';
-        clearBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'; // Usa o ícone do FontAwesome
-        clearBtn.tabIndex = -1; // Pula o botão na navegação via Tab
+        clearBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        clearBtn.tabIndex = -1; // Pula na navegação via Tab
 
-        // 2. Adiciona o botão logo após o input no HTML
+        // 2. Adiciona o botão logo após o input
         input.insertAdjacentElement('afterend', clearBtn);
-        
-        // 3. Adiciona classe ao input para dar espaço ao texto
+
+        // 3. Adiciona classe ao input para dar espaço ao texto (padding-right)
         input.classList.add('input-with-clear');
 
         // 4. Função para mostrar/esconder o botão
         const toggleBtn = () => {
+            // Só mostra se tiver valor digitado
             clearBtn.style.display = input.value.length > 0 ? 'block' : 'none';
         };
 
         // 5. Listeners
-        // Ao digitar, verifica se mostra o botão
         input.addEventListener('input', toggleBtn);
-        
-        // Ao clicar no botão X
+        input.addEventListener('focus', toggleBtn); // Garante que verifica ao entrar no campo
+
         clearBtn.addEventListener('click', () => {
-            input.value = ''; // Limpa o valor
-            toggleBtn(); // Esconde o botão
-            input.focus(); // Devolve o foco para o usuário continuar digitando
-            
-            // Dispara eventos para garantir que validações e máscaras saibam que mudou
-            input.dispatchEvent(new Event('input'));
-            input.dispatchEvent(new Event('change'));
+            input.value = '';
+            toggleBtn();
+            input.focus(); // Devolve o foco para o usuário
+
+            // Dispara eventos para avisar o sistema (validações, máscaras, etc)
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
         });
 
-        // Verifica o estado inicial (caso o navegador preencha automático)
+        // Estado inicial
         toggleBtn();
+    });
+}
+
+function setupDateColors() {
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+
+    dateInputs.forEach(input => {
+        // Função que verifica se tem data e troca a cor
+        const checkValue = () => {
+            if (input.value) {
+                input.classList.add('has-value'); // Fica escuro
+            } else {
+                input.classList.remove('has-value'); // Fica claro (placeholder)
+            }
+        };
+
+        // Ouve quando o usuário muda a data
+        input.addEventListener('change', checkValue);
+        input.addEventListener('input', checkValue);
+        input.addEventListener('blur', checkValue);
+
+        // Roda uma vez ao carregar (para o caso de edição ou preenchimento automático)
+        checkValue();
+    });
+}
+
+// --- FERRAMENTA DE DESENVOLVIMENTO: PREENCHIMENTO AUTOMÁTICO ---
+
+function setupMagicButton() {
+    // 1. Cria o botão flutuante visualmente
+    const btn = document.createElement('button');
+    btn.innerHTML = '<i class="fas fa-magic"></i> Preencher Teste';
+    btn.className = 'magic-btn';
+    btn.title = "Preenche campos obrigatórios automaticamente";
+    document.body.appendChild(btn);
+
+    // 2. Adiciona a lógica de clique
+    btn.addEventListener('click', () => {
+        console.log("🪄 Preenchendo formulário magicamente...");
+
+        // Seleciona todos os campos obrigatórios visíveis e invisíveis
+        const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+
+        requiredInputs.forEach(input => {
+            // Pula se for o input de arquivo (tratamos a foto separadamente)
+            if (input.type === 'file') return;
+
+            // Gera dados baseados no tipo ou ID do campo
+            let value = '';
+
+            if (input.tagName === 'SELECT') {
+                // Pega a segunda opção (geralmente a primeira válida após o "-- Selecione --")
+                if (input.options.length > 1) {
+                    input.selectedIndex = 1; 
+                }
+            } else if (input.type === 'date') {
+                value = '2000-01-01'; // Uma data válida
+            } else if (input.type === 'email') {
+                value = `teste.${Date.now()}@exemplo.com`; // Email único
+            } else {
+                // Lógica específica por ID para máscaras funcionarem melhor
+                const id = input.id.toLowerCase();
+                if (id.includes('cpf')) value = '111.222.333-44'; 
+                else if (id.includes('telefone') || id.includes('whatsapp')) value = '(81) 99999-8888';
+                else if (id.includes('cep')) value = '53610-000'; // CEP de Igarassu genérico
+                else if (id.includes('nome')) value = 'João de Teste Silva';
+                else value = 'Teste Automatizado';
+            }
+
+            // Aplica o valor (se não for select, pois select já foi tratado acima)
+            if (input.tagName !== 'SELECT') {
+                input.value = value;
+            }
+
+            // DISPARA OS EVENTOS
+            // Isso é crucial para:
+            // 1. As máscaras formatarem os números
+            // 2. A validação visual (borda vermelha) sumir
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            input.dispatchEvent(new Event('blur', { bubbles: true }));
+        });
+
+        // --- TRUQUE DA FOTO (Bypass da validação de imagem) ---
+        // Cria um quadrado cinza de 1x1 pixel para simular uma foto cortada
+        const pixelBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+        fetch(`data:image/png;base64,${pixelBase64}`)
+            .then(res => res.blob())
+            .then(blob => {
+                // Define a variável global que o seu script usa para validar
+                croppedBlob = blob; 
+                
+                // Atualiza o visual
+                const preview = document.getElementById('photo-preview');
+                if (preview) {
+                    preview.style.backgroundImage = `url(data:image/png;base64,${pixelBase64})`;
+                    preview.innerHTML = ''; // Remove o ícone da câmera
+                    preview.style.borderColor = '#10b981'; // Borda verde
+                }
+                
+                const statusMsg = document.getElementById('photo-status-msg');
+                if(statusMsg) {
+                    statusMsg.textContent = "Foto de teste gerada!";
+                    statusMsg.style.color = "green";
+                }
+            });
+
+        alert('🪄 Campos preenchidos! (Inclusive a foto interna)');
     });
 }

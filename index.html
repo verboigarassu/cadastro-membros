@@ -529,6 +529,27 @@
                 src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
         <script src="https://unpkg.com/heic2any"></script>
         <script src="script-cadastro-membros.js"></script>
+
+        <div id="successModal" class="modal-overlay">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <i class="fas fa-check-circle success-icon"></i>
+                        </div>
+                        <div class="modal-body">
+                                <h2>Cadastro Realizado!</h2>
+                                <p>Os dados do novo membro foram salvos com sucesso no sistema.</p>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" id="modalCloseBtn" class="btn btn-secondary">
+                                        <i class="fas fa-times"></i> Fechar
+                                </button>
+
+                                <button type="button" id="modalNewBtn" class="btn btn-primary">
+                                        <i class="fas fa-user-plus"></i> Novo Cadastro
+                                </button>
+                        </div>
+                </div>
+        </div>
 </body>
 
 </html>

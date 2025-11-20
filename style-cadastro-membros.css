@@ -1,5 +1,5 @@
 :root {
-    --orange-primary:#00539c;
+    --orange-primary: #00539c;
     --text-dark: #1f2937;
     --text-light: #6b7280;
     --border-color: #e5e7eb;
@@ -26,10 +26,12 @@ body {
     min-height: 100vh;
     display: flex;
     /* Garante que o formulário e o footer fiquem um embaixo do outro */
-    flex-direction: column; 
-    align-items: center; /* Centraliza horizontalmente */
+    flex-direction: column;
+    align-items: center;
+    /* Centraliza horizontalmente */
     padding: 40px 15px;
-    gap: 20px; /* Espaço entre o formulário e o footer */
+    gap: 20px;
+    /* Espaço entre o formulário e o footer */
 }
 
 .signup-container {
@@ -126,13 +128,22 @@ body {
 .step-title {
     font-size: 12px;
     color: var(--text-light);
-    display: none; /* Oculta em mobile por padrão */
+    display: none;
+    /* Oculta em mobile por padrão */
 }
 
 @media(min-width: 600px) {
-    .step-title { display: block; }
-    .signup-container { padding: 40px; }
-    .form-header h1 { font-size: 28px; }
+    .step-title {
+        display: block;
+    }
+
+    .signup-container {
+        padding: 40px;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+    }
 }
 
 .form-step {
@@ -140,15 +151,24 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
-.form-step.active { display: block; }
+.form-step.active {
+    display: block;
+}
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Inputs e Grids */
-.input-group { margin-bottom: 20px; }
+.input-group {
+    margin-bottom: 20px;
+}
 
 .input-group label {
     display: block;
@@ -158,7 +178,9 @@ body {
     color: var(--text-light);
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid var(--border-color);
@@ -167,30 +189,46 @@ input, select, textarea {
     font-family: 'Poppins', sans-serif;
     background-color: var(--background-white);
     color: var(--text-dark);
-    
+
     /* ADICIONE ESTA LINHA: Garante que padding e borda contem na largura */
-    box-sizing: border-box; 
-    
+    box-sizing: border-box;
+
     /* Opcional: remove estilo padrão do iOS que arredonda inputs */
     -webkit-appearance: none;
     appearance: none;
 }
 
-/* Garante que o input de data tenha a mesma altura dos outros */
-input[type="date"] {
-    /* Em alguns browsers, o date é um pouco menor, isso corrige */
-    min-height: 46px; 
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
-.grid-2 { display: grid; grid-template-columns: 1fr; gap: 20px; }
-.grid-3 { display: grid; grid-template-columns: 1fr; gap: 20px; }
-.grid-4 { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
 
 @media(min-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr 1fr; }
-    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-    .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-    
+    .grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid-4 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
     /* Layout específico para a área da foto */
     #signupForm .grid-2:first-of-type {
         grid-template-columns: 1fr auto;
@@ -209,7 +247,9 @@ input[type="date"] {
 }
 
 @media(min-width: 768px) {
-    #photo-upload-section { margin-top: 0; }
+    #photo-upload-section {
+        margin-top: 0;
+    }
 }
 
 #photo-preview {
@@ -228,7 +268,9 @@ input[type="date"] {
     color: var(--text-light);
 }
 
-input[type="file"] { display: none; }
+input[type="file"] {
+    display: none;
+}
 
 /* Botões */
 .btn {
@@ -241,30 +283,45 @@ input[type="file"] { display: none; }
     transition: opacity 0.2s;
 }
 
-.btn:hover { opacity: 0.9; }
+.btn:hover {
+    opacity: 0.9;
+}
 
-.btn-primary { background-color: var(--orange-primary); color: white; }
-.btn-secondary { background-color: var(--border-color); color: var(--text-dark); }
+.btn-primary {
+    background-color: var(--orange-primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: var(--text-dark);
+}
 
 .form-navigation-btns {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
-    gap: 20px; /* <--- ADICIONE ESTA LINHA */
+    gap: 20px;
+    /* <--- ADICIONE ESTA LINHA */
 }
 
 /* Modal */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-.modal-overlay.active { display: flex; }
+.modal-overlay.active {
+    display: flex;
+}
 
 .modal-content {
     background: white;
@@ -304,26 +361,32 @@ input[type="file"] { display: none; }
 .checkbox-group {
     display: grid;
     /* Define exatamente duas colunas de tamanho igual */
-    grid-template-columns: 1fr 1fr; 
-    gap: 15px; /* Espaço entre as colunas e linhas */
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    /* Espaço entre as colunas e linhas */
     margin-top: 10px;
 }
 
 .checkbox-container {
     display: flex;
-    align-items: center; /* Alinha a caixa de seleção com o texto */
+    align-items: center;
+    /* Alinha a caixa de seleção com o texto */
     gap: 10px;
     cursor: pointer;
     font-size: 14px;
-    line-height: 1.3; /* Melhora a leitura se o texto quebrar linha */
+    line-height: 1.3;
+    /* Melhora a leitura se o texto quebrar linha */
 }
 
 .checkbox-container input {
-    width: 18px; /* Tamanho fixo para o checkbox */
+    width: 18px;
+    /* Tamanho fixo para o checkbox */
     height: 18px;
-    flex-shrink: 0; /* Impede que o checkbox encolha se o texto for grande */
+    flex-shrink: 0;
+    /* Impede que o checkbox encolha se o texto for grande */
     margin: 0;
-    accent-color: #00539c; /* Azul escuro conforme solicitado */
+    accent-color: #00539c;
+    /* Azul escuro conforme solicitado */
 }
 
 /* Ajuste responsivo opcional: Em telas muito pequenas, o texto pode diminuir um pouco */
@@ -339,19 +402,27 @@ input[type="file"] { display: none; }
 }
 
 .form-logo {
-    max-width: 250px; /* Controla o tamanho máximo da logo */
-    width: 100%;      /* Garante que ela diminua no celular se necessário */
-    height: auto;     /* Mantém a proporção correta */
-    margin-bottom: 20px; /* Espaço entre a logo e o título */
-    display: block;   /* Necessário para centralizar com margin auto */
-    margin-left: auto;  /* Centraliza horizontalmente */
-    margin-right: auto; /* Centraliza horizontalmente */
+    max-width: 250px;
+    /* Controla o tamanho máximo da logo */
+    width: 100%;
+    /* Garante que ela diminua no celular se necessário */
+    height: auto;
+    /* Mantém a proporção correta */
+    margin-bottom: 20px;
+    /* Espaço entre a logo e o título */
+    display: block;
+    /* Necessário para centralizar com margin auto */
+    margin-left: auto;
+    /* Centraliza horizontalmente */
+    margin-right: auto;
+    /* Centraliza horizontalmente */
 }
 
 /* Ajuste opcional para celulares muito pequenos */
 @media (max-width: 480px) {
     .form-logo {
-        max-width: 200px; /* Logo um pouco menor no celular */
+        max-width: 200px;
+        /* Logo um pouco menor no celular */
     }
 }
 
@@ -377,11 +448,25 @@ input[type="file"] { display: none; }
 
 /* Animação opcional de batida do coração */
 @keyframes heartbeat {
-    0% { transform: scale(1); }
-    15% { transform: scale(1.3); }
-    30% { transform: scale(1); }
-    45% { transform: scale(1.3); }
-    60% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.3);
+    }
+
+    60% {
+        transform: scale(1);
+    }
 }
 
 /* --- Botão de Limpar Input (X) --- */
@@ -396,25 +481,291 @@ input[type="file"] { display: none; }
     position: absolute;
     right: 10px;
     /* Centraliza verticalmente em relação ao input (considerando o label acima) */
-    top: 53px; 
+    top: 53px;
     transform: translateY(-50%);
-    
+
     background: none;
     border: none;
-    color: #b9bcc3; /* Cinza claro */
+    color: #b9bcc3;
+    /* Cinza claro */
     cursor: pointer;
     font-size: 16px;
     padding: 5px;
-    display: none; /* Escondido se o campo estiver vazio */
+    display: none;
+    /* Escondido se o campo estiver vazio */
     z-index: 10;
     transition: color 0.2s;
 }
 
 .clear-input-btn:hover {
-    color: #ef4444; /* Vermelho ao passar o mouse */
+    color: #ef4444;
+    /* Vermelho ao passar o mouse */
 }
 
 /* Ajuste para inputs que têm o botão X: dá espaço para o texto não ficar por baixo */
 .input-with-clear {
     padding-right: 35px !important;
+}
+
+/* --- Estilo Minimalista para Data (VERSÃO FINAL LIMPA) --- */
+
+input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    min-height: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    background-color: var(--background-white);
+
+    /* Cor do texto padrão (placeholder) */
+    color: #9ca3af;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    /* --- ÍCONES --- */
+    /* Calendário (Esq) e Seta (Dir) com a cor cinza correta (#9ca3af) */
+    background-image:
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%239ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>'),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%239ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+
+    background-repeat: no-repeat;
+
+    /* --- POSIÇÃO CORRIGIDA --- */
+    /* "center" garante que fique alinhado verticalmente no meio exato */
+    background-position: left 15px center, right 15px center;
+
+    background-size: 20px, 16px;
+
+    padding-left: 50px;
+    padding-right: 40px;
+
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+/* Quando focar ou tiver valor, o texto fica escuro */
+input[type="date"]:focus,
+input[type="date"].has-value {
+    color: var(--text-dark);
+    border-color: var(--orange-primary);
+    outline: none;
+}
+
+/* Remove o ícone nativo mas mantém clicável */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Quando focar ou tiver valor, o texto fica escuro (o ícone mantém a cor suave) */
+input[type="date"]:focus,
+input[type="date"].has-value {
+    color: var(--text-dark);
+    border-color: var(--orange-primary);
+    outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* --- NOVA REGRA: Quando focar ou tiver valor, fica escuro --- */
+input[type="date"]:focus,
+input[type="date"].has-value {
+    color: var(--text-dark);
+    /* Cor escura (preto/cinza chumbo) */
+    border-color: var(--orange-primary);
+    outline: none;
+}
+
+/* Mantém o truque do clique em toda a área */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Efeito de Foco (quando clica) */
+input[type="date"]:focus {
+    border-color: var(--orange-primary);
+    box-shadow: 0 0 0 3px rgba(0, 83, 156, 0.1);
+    /* Sombra azul suave */
+    outline: none;
+}
+
+/* --- TRUQUE DE FUNCIONALIDADE --- */
+/* Expande a área clicável do calendário nativo para cobrir todo o campo */
+/* Assim, clicar no ícone da esquerda ou no texto abre o calendário */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    /* Invisível, mas clicável */
+    cursor: pointer;
+}
+
+/* Truque para Chrome/Edge: Torna o ícone nativo invisível mas clicável por cima do nosso */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    /* Largura da área de clique do ícone */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Estilos do Modal de Sucesso --- */
+
+#successModal .modal-content {
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#successModal .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#successModal .success-icon {
+    font-size: 60px;
+    color: #10b981; /* Verde Sucesso */
+    margin-bottom: 10px;
+    animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#successModal h2 {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+#successModal p {
+    color: var(--text-light);
+    font-size: 14px;
+    margin: 0;
+}
+
+#successModal .modal-footer {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+    border-top: none; /* Remove borda padrão se houver */
+}
+
+#successModal .btn {
+    width: 100%; /* Em mobile ocupa largura total */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Animação de entrada do ícone */
+@keyframes scaleIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Ajuste para telas maiores */
+@media(min-width: 600px) {
+    #successModal .modal-footer {
+        flex-direction: row;
+    }
+    
+    #successModal .btn {
+        width: auto;
+        min-width: 140px;
+    }
+}
+
+/* --- Botão Mágico de Desenvolvimento --- */
+.magic-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background-color: #8b5cf6; /* Roxo */
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.magic-btn:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+}
+
+.magic-btn:active {
+    transform: scale(0.95);
+}
+
+/* Ocultar em impressão */
+@media print {
+    .magic-btn { display: none; }
+}
+
+/* --- Ajuste do Botão X para Textarea --- */
+
+/* Posiciona o X no topo da caixa de texto grande, alinhado com a primeira linha */
+.input-group textarea + .clear-input-btn {
+    top: 45px !important; /* Sobrescreve o valor padrão de 53px */
+}
+
+/* Garante que o X apareça sobre o input corretamente */
+.clear-input-btn {
+    background-color: transparent; /* Garante fundo transparente */
+    line-height: 1;
 }
