@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro de Membros - Verbo da Vida</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+                rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
+        <link rel="stylesheet" href="style-cadastro-membros.css">
+</head>
+
+<body>
+
+        <main class="form-wrapper">
+                <div class="signup-container">
+                        <header class="form-header">
+                                <img src="https://raw.githubusercontent.com/silasdouglas/verboigarassu/refs/heads/main/logo-verbo-azul-horizontal.png"
+                                        alt="Logo Verbo da Vida" class="form-logo">
+                                <h1>Cadastro de Novo Membro</h1>
+                                <p>(a partir dos 13 anos)</p>
+                        </header>
+
+                        <div class="stepper">
+                                <div class="progress-bar"></div>
+                                <div class="step active" data-step="0">
+                                        <div class="step-number">1</div>
+                                        <div class="step-title">Identificação</div>
+                                </div>
+                                <div class="step" data-step="1">
+                                        <div class="step-number">2</div>
+                                        <div class="step-title">Contato & Família</div>
+                                </div>
+                                <div class="step" data-step="2">
+                                        <div class="step-number">3</div>
+                                        <div class="step-title">Formação</div>
+                                </div>
+                                <div class="step" data-step="3">
+                                        <div class="step-number">4</div>
+                                        <div class="step-title">Caminhada Cristã</div>
+                                </div>
+                                <div class="step" data-step="4">
+                                        <div class="step-number">5</div>
+                                        <div class="step-title">Adicionais</div>
+                                </div>
+                        </div>
+
+                        <form id="signupForm" novalidate>
+                                <div class="form-step active">
+                                        <h2 class="form-section-title">Dados Pessoais</h2>
+                                        <div class="grid-2">
+                                                <div>
+                                                        <div class="input-group"><label for="fullName">Nome
+                                                                        Completo</label><input type="text" id="fullName"
+                                                                        placeholder="Nome completo" required></div>
+                                                        <div class="grid-2">
+                                                                <div class="input-group"><label for="nascimento">Data de
+                                                                                Nascimento</label><input type="date"
+                                                                                id="nascimento" required></div>
+                                                                <div class="input-group"><label
+                                                                                for="sexo">Sexo</label><select id="sexo"
+                                                                                required>
+                                                                                <option value="">-- Selecione --
+                                                                                </option>
+                                                                                <option>Masculino</option>
+                                                                                <option>Feminino</option>
+                                                                        </select></div>
+                                                        </div>
+                                                </div>
+                                                <div id="photo-upload-section">
+                                                        <label for="photo-input" id="photo-preview"><i
+                                                                        class="fa-solid fa-camera"></i></label>
+                                                        <input type="file" id="photo-input"
+                                                                accept="image/*,.heic,.heif" required>
+                                                        <label for="photo-input" style="cursor: pointer;"
+                                                                id="photo-upload-label">Adicionar
+                                                                Foto</label>
+                                                        <span id="photo-status-msg"></span>
+                                                </div>
+                                        </div>
+                                        <div class="input-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" id="email" placeholder="seuemail@exemplo.com"
+                                                        required>
+                                        </div>
+                                        <h2 class="form-section-title">Documentos e Origem</h2>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="cpf">CPF</label><input type="text"
+                                                                id="cpf" placeholder="000.000.000-00" required
+                                                                maxlength="14" inputmode="numeric"></div>
+                                                <div class="input-group"><label for="rg">RG</label><input type="text"
+                                                                id="rg" placeholder="0.000.000"></div>
+                                                <div class="input-group"><label for="orgaoExpeditor">Orgão
+                                                                Expedidor</label><input type="text" id="orgaoExpeditor"
+                                                                placeholder="Ex: SDS/PE"></div>
+                                        </div>
+                                        <div class="grid-2">
+                                                <div class="input-group"><label
+                                                                for="nacionalidade">Nacionalidade</label><input
+                                                                type="text" id="nacionalidade" value="Brasileira"
+                                                                required></div>
+                                                <div class="input-group"><label
+                                                                for="naturalidade">Naturalidade</label><input
+                                                                type="text" id="naturalidade"
+                                                                placeholder="Ex: Recife/PE" required></div>
+                                        </div>
+                                        <div class="form-navigation-btns"><button type="button"
+                                                        class="btn btn-primary next-btn"
+                                                        style="margin-left: auto;">Próximo</button></div>
+                                </div>
+
+                                <div class="form-step">
+                                        <h2 class="form-section-title">Endereço</h2>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="cep">CEP</label><input type="text"
+                                                                id="cep" placeholder="00000-000" maxlength="9"
+                                                                inputmode="numeric"></div>
+                                                <div class="input-group" style="grid-column: span 2;"><label
+                                                                for="rua">Rua /
+                                                                Avenida</label><input type="text" id="rua"
+                                                                placeholder="Preenchimento automático" required></div>
+                                        </div>
+                                        <div class="grid-4">
+                                                <div class="input-group"><label for="numero">Número</label><input
+                                                                type="text" id="numero"></div>
+                                                <div class="input-group"><label for="bairro">Bairro</label><input
+                                                                type="text" id="bairro"
+                                                                placeholder="Preenchimento automático" required></div>
+                                                <div class="input-group"><label for="cidade">Cidade</label><input
+                                                                type="text" id="cidade"
+                                                                placeholder="Preenchimento automático" required></div>
+                                                <div class="input-group"><label for="estado">Estado (UF)</label><input
+                                                                type="text" id="estado"
+                                                                placeholder="Preenchimento automático" required></div>
+                                        </div>
+                                        <h2 class="form-section-title">Contato</h2>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="telefone1">Telefone
+                                                                01</label><input type="text" id="telefone1"
+                                                                placeholder="(00) 00000-0000" required maxlength="15"
+                                                                inputmode="tel">
+                                                </div>
+                                                <div class="input-group"><label for="whatsapp1">É
+                                                                WhatsApp?</label><select id="whatsapp1" required>
+                                                                <option value="">-- Selecione --</option>
+                                                                <option>Sim</option>
+                                                                <option>Não</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="operadora1">Operadora</label><input
+                                                                type="text" id="operadora1" placeholder="Ex: TIM, Vivo"
+                                                                required></div>
+                                        </div>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="telefone2">Telefone
+                                                                02</label><input type="text" id="telefone2"
+                                                                placeholder="(00) 00000-0000" maxlength="15"
+                                                                inputmode="tel"></div>
+                                                <div class="input-group"><label for="whatsapp2">É
+                                                                WhatsApp?</label><select id="whatsapp2">
+                                                                <option value="">-- Selecione --</option>
+                                                                <option>Sim</option>
+                                                                <option>Não</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="operadora2">Operadora</label><input
+                                                                type="text" id="operadora2" placeholder="Ex: Claro, Oi">
+                                                </div>
+                                        </div>
+
+                                        <h2 class="form-section-title">Família</h2>
+                                        <div class="input-group">
+                                                <label for="estadoCivil">Estado Civil</label>
+                                                <select id="estadoCivil" required>
+                                                        <option value="">-- Selecione --</option>
+                                                        <option>Solteiro(a)</option>
+                                                        <option value="casado">Casado(a)</option>
+                                                        <option>Divorciado(a)</option>
+                                                        <option>Viúvo(a)</option>
+                                                </select>
+                                        </div>
+                                        <div id="dadosConjuge" class="grid-3 conditional-field"
+                                                style="display: none; align-items: flex-end; margin-top: 15px;">
+                                                <div class="input-group"><label for="nomeConjuge">Nome do
+                                                                Cônjuge</label><input type="text" id="nomeConjuge"
+                                                                placeholder="Nome completo do cônjuge"></div>
+                                                <div class="input-group"><label for="conjugeMembro">O cônjuge também é
+                                                                membro?</label><select id="conjugeMembro">
+                                                                <option value="">-- Selecione --</option>
+                                                                <option>Sim</option>
+                                                                <option>Não</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="dataCasamento">Data de
+                                                                Casamento</label><input type="date" id="dataCasamento">
+                                                </div>
+                                        </div>
+
+                                        <h2 class="form-section-title">Dependentes</h2>
+                                        <div id="dependentes-container">
+                                        </div>
+                                        <button type="button" id="add-dependente-btn" class="btn btn-secondary"
+                                                style="margin-top: 15px; margin-bottom: 20px;"><i
+                                                        class="fas fa-plus"></i> Adicionar
+                                                Dependente</button>
+
+                                        <div class="form-navigation-btns"><button type="button"
+                                                        class="btn btn-secondary prev-btn">Anterior</button><button
+                                                        type="button" class="btn btn-primary next-btn">Próximo</button>
+                                        </div>
+                                </div>
+
+                                <div class="form-step">
+                                        <h2 class="form-section-title">Formação Acadêmica e Profissional</h2>
+                                        <div class="grid-2">
+                                                <div class="input-group"><label
+                                                                for="escolaridade">Escolaridade</label><select
+                                                                id="escolaridade" required>
+                                                                <option value="">-- Selecione --</option>
+                                                                <option>Ensino Médio</option>
+                                                                <option>Ensino Superior</option>
+                                                                <option>Pós-graduação</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="profissao">Profissão</label><input
+                                                                type="text" id="profissao"
+                                                                placeholder="Sua profissão principal" required></div>
+                                        </div>
+                                        <div class="grid-2">
+                                                <div class="input-group"><label for="empresario">É
+                                                                Empresário?</label><select id="empresario" required>
+                                                                <option value="Não">Não</option>
+                                                                <option value="Sim">Sim</option>
+                                                        </select></div>
+                                                <div class="input-group conditional-field" id="nomeEmpresaGroup"
+                                                        style="display: none;"><label for="nomeEmpresa">Nome da
+                                                                Empresa</label><input type="text" id="nomeEmpresa"
+                                                                placeholder="Nome da sua empresa"></div>
+                                        </div>
+                                        <div class="input-group"><label for="cursos">Cursos Relevantes</label><textarea
+                                                        id="cursos" rows="4"
+                                                        placeholder="Cursos teológicos ou outras formações importantes..."></textarea>
+                                        </div>
+                                        <div class="form-navigation-btns"><button type="button"
+                                                        class="btn btn-secondary prev-btn">Anterior</button><button
+                                                        type="button" class="btn btn-primary next-btn">Próximo</button>
+                                        </div>
+                                </div>
+
+                                <div class="form-step">
+                                        <h2 class="form-section-title">Caminhada Cristã</h2>
+                                        <div class="input-group"><label for="conversao">Data de Conversão</label><input
+                                                        type="date" id="conversao"></div>
+                                        <div class="grid-2">
+                                                <div class="input-group"><label for="concluiuDiscipulado">Concluiu
+                                                                discipulado?</label><select id="concluiuDiscipulado"
+                                                                required>
+                                                                <option value="Não">Não</option>
+                                                                <option value="Sim">Sim</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="dataConclusaoDiscipulado">Data
+                                                                Conclusão</label><input type="date"
+                                                                id="dataConclusaoDiscipulado"></div>
+                                        </div>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="foiBatizadoAguas">Batismo nas
+                                                                Águas?</label><select id="foiBatizadoAguas" required>
+                                                                <option value="Não">Não</option>
+                                                                <option value="Sim">Sim</option>
+                                                        </select></div>
+                                                <div class="input-group"><label
+                                                                for="tipoBatismoAguas">Tipo</label><select
+                                                                id="tipoBatismoAguas">
+                                                                <option>Imersão</option>
+                                                                <option>Aspersão</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="batismoAguas">Data
+                                                                Batismo</label><input type="date" id="batismoAguas">
+                                                </div>
+                                        </div>
+                                        <div class="grid-2">
+                                                <div class="input-group"><label for="foiBatizadoEspirito">Batismo
+                                                                Espírito Santo?</label><select id="foiBatizadoEspirito"
+                                                                required>
+                                                                <option value="Não">Não</option>
+                                                                <option value="Sim">Sim</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="batismoEspirito">Data</label><input
+                                                                type="date" id="batismoEspirito"></div>
+                                        </div>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="igrejaAtual">Igreja
+                                                                Atual</label><select id="igrejaAtual" required>
+                                                                <option>Agamenon Magalhães (Sede)</option>
+                                                                <option>Nova Cruz 2</option>
+                                                        </select></div>
+                                                <div class="input-group"><label for="igrejaAnterior">Igreja
+                                                                Anterior</label><input type="text" id="igrejaAnterior">
+                                                </div>
+                                                <div class="input-group"><label for="dataSaidaIgreja">Ano
+                                                                Saída</label><input type="text" id="dataSaidaIgreja"
+                                                                placeholder="AAAA"></div>
+                                        </div>
+
+                                        <h2 class="form-section-title">Envolvimento</h2>
+                                        <div class="input-group">
+                                                <label for="serveDepartamento">Serve em algum departamento
+                                                        atualmente?</label>
+                                                <select id="serveDepartamento" required>
+                                                        <option value="">-- Selecione --</option>
+                                                        <option value="nao">Não</option>
+                                                        <option value="sim">Sim</option>
+                                                </select>
+                                        </div>
+
+                                        <div id="departamentosAtuais" class="conditional-field" style="display: none;">
+                                                <label style="display: block; margin: 15px 0; font-weight: 600;">Selecione
+                                                        os departamentos em
+                                                        que serve:</label>
+                                                <div class="checkbox-group">
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Adolescentes">
+                                                                Adolescentes</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Diretoria">
+                                                                Diretoria</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Mulheres">
+                                                                Mulheres</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Casais e Homens">
+                                                                Casais e Homens</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Discipulado">
+                                                                Discipulado</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Oração">
+                                                                Oração</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Comunicação">
+                                                                Comunicação</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Evangelismo">
+                                                                Evangelismo</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual"
+                                                                        value="Rhema Convencional"> Rhema
+                                                                Convencional</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Conselheiros">
+                                                                Conselheiros</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual"
+                                                                        value="GC - Grupos de Conexão"> GC – Grupos de
+                                                                Conexão</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Rhema Prisional">
+                                                                Rhema Prisional</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Consolidação">
+                                                                Consolidação</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Jovens">
+                                                                Jovens</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual"
+                                                                        value="Secretaria de Missões"> Secretaria de
+                                                                Missões</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual"
+                                                                        value="Departamento Infantil"> Departamento
+                                                                Infantil</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Livraria">
+                                                                Livraria</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Diaconato">
+                                                                Diaconato</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_atual" value="Louvor">
+                                                                Louvor</label>
+                                                </div>
+                                        </div>
+
+                                        <div class="input-group" style="margin-top: 25px;">
+                                                <label for="interesseServir">Tem interesse em servir em algum
+                                                        departamento?</label>
+                                                <select id="interesseServir" required>
+                                                        <option value="">-- Selecione --</option>
+                                                        <option value="nao">Não</option>
+                                                        <option value="sim">Sim</option>
+                                                </select>
+                                        </div>
+
+                                        <div id="departamentosInteresse" class="conditional-field"
+                                                style="display: none;">
+                                                <label style="display: block; margin: 15px 0; font-weight: 600;">Selecione
+                                                        os departamentos de
+                                                        interesse:</label>
+                                                <div class="checkbox-group">
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Adolescentes"> Adolescentes</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Mulheres">
+                                                                Mulheres</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Casais e Homens"> Casais e Homens</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Discipulado">
+                                                                Discipulado</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Oração">
+                                                                Oração</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Comunicação">
+                                                                Comunicação</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Evangelismo">
+                                                                Evangelismo</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Rhema Convencional"> Rhema
+                                                                Convencional</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Conselheiros"> Conselheiros</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="GC - Grupos de Conexão"> GC – Grupos de
+                                                                Conexão</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Rhema Prisional"> Rhema Prisional</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Consolidação"> Consolidação</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Jovens">
+                                                                Jovens</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Secretaria de Missões"> Secretaria de
+                                                                Missões</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse"
+                                                                        value="Departamento Infantil"> Departamento
+                                                                Infantil</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Livraria">
+                                                                Livraria</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Diaconato">
+                                                                Diaconato</label>
+                                                        <label class="checkbox-container"><input type="checkbox"
+                                                                        name="ministerio_interesse" value="Louvor">
+                                                                Louvor</label>
+                                                </div>
+                                        </div>
+
+                                        <div class="form-navigation-btns"><button type="button"
+                                                        class="btn btn-secondary prev-btn">Anterior</button><button
+                                                        type="button" class="btn btn-primary next-btn">Próximo</button>
+                                        </div>
+                                </div>
+
+                                <div class="form-step">
+                                        <h2 class="form-section-title">Redes Sociais</h2>
+                                        <div class="grid-3">
+                                                <div class="input-group"><label for="instagram">Instagram</label><input
+                                                                type="text" id="instagram" placeholder="@seuusuario">
+                                                </div>
+                                                <div class="input-group"><label for="tiktok">Tiktok</label><input
+                                                                type="text" id="tiktok" placeholder="@seuusuario"></div>
+                                                <div class="input-group"><label for="facebook">Facebook</label><input
+                                                                type="text" id="facebook" placeholder="/seuperfil">
+                                                </div>
+                                        </div>
+                                        <h2 class="form-section-title">Informações Adicionais</h2>
+                                        <div class="input-group"><label for="habilidades">Habilidades e
+                                                        Dons</label><textarea id="habilidades" rows="4"
+                                                        placeholder="Você tem alguma habilidade específica?"
+                                                        required></textarea></div>
+                                        <div class="input-group"><label for="observacoes">Observações
+                                                        Gerais</label><textarea id="observacoes" rows="4"
+                                                        placeholder="Qualquer outra informação relevante..."></textarea>
+                                        </div>
+
+                                        <div class="form-navigation-btns">
+                                                <button type="button"
+                                                        class="btn btn-secondary prev-btn">Anterior</button>
+                                                <button type="submit" class="btn btn-primary" id="submitBtn"><i
+                                                                class="fas fa-save"></i> Salvar
+                                                        Cadastro</button>
+                                        </div>
+                                </div>
+                        </form>
+                </div>
+                <footer class="main-footer">
+                        <p>&copy; 2025 Verbo da Vida - Igarassu. Todos os direitos reservados.</p>
+                </footer>
+        </main>
+
+        <div id="cropImageModal" class="modal-overlay">
+                <div class="modal-content" style="max-width: 500px;">
+                        <div class="modal-header">
+                                <h2>Recortar Imagem</h2>
+                                <button type="button" class="modal-close-btn">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                                <div style="max-height: 400px; overflow: hidden;">
+                                        <img id="imageToCrop" src="" alt="Imagem para recortar"
+                                                style="display: block; max-width: 100%;">
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" id="confirmCropBtn" class="btn btn-primary">Confirmar
+                                        Corte</button>
+                        </div>
+                </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
+        <script src="https://unpkg.com/heic2any"></script>
+        <script src="script-cadastro-membros.js"></script>
+</body>
+
+</html>

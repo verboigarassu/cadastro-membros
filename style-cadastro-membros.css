@@ -1,0 +1,372 @@
+:root {
+    --orange-primary:#00539c;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --background-white: #ffffff;
+    --background-body: #f3f4f6;
+    --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-body);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.form-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    /* Garante que o formulário e o footer fiquem um embaixo do outro */
+    flex-direction: column; 
+    align-items: center; /* Centraliza horizontalmente */
+    padding: 40px 15px;
+    gap: 20px; /* Espaço entre o formulário e o footer */
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 900px;
+    background-color: var(--background-white);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.form-header p {
+    color: var(--text-light);
+}
+
+/* Stepper */
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+    position: relative;
+}
+
+.stepper::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 2px;
+    background-color: var(--orange-primary);
+    width: 0%;
+    z-index: 2;
+    transition: width 0.3s ease;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 3;
+    position: relative;
+    cursor: pointer;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--background-body);
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+    background-color: var(--orange-primary);
+    color: white;
+    border-color: var(--orange-primary);
+}
+
+.step.completed .step-number {
+    background-color: var(--background-white);
+    color: var(--orange-primary);
+    border-color: var(--orange-primary);
+}
+
+.step-title {
+    font-size: 12px;
+    color: var(--text-light);
+    display: none; /* Oculta em mobile por padrão */
+}
+
+@media(min-width: 600px) {
+    .step-title { display: block; }
+    .signup-container { padding: 40px; }
+    .form-header h1 { font-size: 28px; }
+}
+
+.form-step {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.form-step.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Inputs e Grids */
+.input-group { margin-bottom: 20px; }
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-white);
+    color: var(--text-dark);
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+@media(min-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    
+    /* Layout específico para a área da foto */
+    #signupForm .grid-2:first-of-type {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+    }
+}
+
+/* Foto */
+#photo-upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+@media(min-width: 768px) {
+    #photo-upload-section { margin-top: 0; }
+}
+
+#photo-preview {
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    font-size: 40px;
+    color: var(--text-light);
+}
+
+input[type="file"] { display: none; }
+
+/* Botões */
+.btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover { opacity: 0.9; }
+
+.btn-primary { background-color: var(--orange-primary); color: white; }
+.btn-secondary { background-color: var(--border-color); color: var(--text-dark); }
+
+.form-navigation-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px; /* <--- ADICIONE ESTA LINHA */
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-footer {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.required-asterisk {
+    color: #ff0000;
+    font-weight: bold;
+    margin-left: 0;
+}
+
+/* ... (outros estilos acima) ... */
+
+.checkbox-group {
+    display: grid;
+    /* Define exatamente duas colunas de tamanho igual */
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; /* Espaço entre as colunas e linhas */
+    margin-top: 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Alinha a caixa de seleção com o texto */
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.3; /* Melhora a leitura se o texto quebrar linha */
+}
+
+.checkbox-container input {
+    width: 18px; /* Tamanho fixo para o checkbox */
+    height: 18px;
+    flex-shrink: 0; /* Impede que o checkbox encolha se o texto for grande */
+    margin: 0;
+    accent-color: #00539c; /* Azul escuro conforme solicitado */
+}
+
+/* Ajuste responsivo opcional: Em telas muito pequenas, o texto pode diminuir um pouco */
+@media (max-width: 400px) {
+    .checkbox-container {
+        font-size: 13px;
+    }
+}
+
+#photo-status-msg {
+    font-size: 12px;
+    color: var(--orange-primary);
+}
+
+.form-logo {
+    max-width: 250px; /* Controla o tamanho máximo da logo */
+    width: 100%;      /* Garante que ela diminua no celular se necessário */
+    height: auto;     /* Mantém a proporção correta */
+    margin-bottom: 20px; /* Espaço entre a logo e o título */
+    display: block;   /* Necessário para centralizar com margin auto */
+    margin-left: auto;  /* Centraliza horizontalmente */
+    margin-right: auto; /* Centraliza horizontalmente */
+}
+
+/* Ajuste opcional para celulares muito pequenos */
+@media (max-width: 480px) {
+    .form-logo {
+        max-width: 200px; /* Logo um pouco menor no celular */
+    }
+}
+
+/* Estilos do Rodapé */
+.main-footer {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 12px;
+    width: 100%;
+    padding-bottom: 20px;
+    opacity: 0.8;
+}
+
+.main-footer p {
+    margin: 5px 0;
+}
+
+.main-footer i {
+    font-size: 10px;
+    margin: 0 2px;
+    animation: heartbeat 1.5s infinite;
+}
+
+/* Animação opcional de batida do coração */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.3); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.3); }
+    60% { transform: scale(1); }
+}
